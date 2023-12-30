@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Link from '@mui/material/Link';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 const Search = styled('div')(({ theme }) => ({
@@ -127,7 +128,7 @@ export default function Header() {
   );
 
   return (
-    <Box>
+    <Box sx={{marginBottom: "10px"}}>
       <AppBar position='sticky' sx={{ backgroundColor: 'black' }}>
         <Toolbar>
           <IconButton
@@ -160,7 +161,10 @@ export default function Header() {
           {/* <Box sx={{ flexGrow: 1 }} /> */}
 
           <Box sx={{ display: 'flex' }}>
-            <Button
+            {/* <Link to={`/register`}>Hello, sign in</Link> */}
+            <Link
+              href={`/register`}
+              //   onClick={handleSignIn}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -168,7 +172,7 @@ export default function Header() {
                 textTransform: 'none',
               }}>
               Hello, sign in
-            </Button>
+            </Link>
             <IconButton
               size='large'
               aria-label='show 4 cart items'
