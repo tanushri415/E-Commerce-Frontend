@@ -2,8 +2,13 @@ import { Box, Container, InputLabel, Stack, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import { registerUser } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const [registrationError, setRegistrationError] = useState('');
   const [formValues, setFormValues] = useState({
     username: {
       value: '',
@@ -19,7 +24,7 @@ const Register = () => {
 
   const handleFormElementChange = (e) => {
     e.preventDefault();
-
+    setRegistrationError('');
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
@@ -30,8 +35,9 @@ const Register = () => {
       },
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    let formHasError = false;
     const formFields = Object.keys(formValues);
     let newFormValues = { ...formValues };
 
@@ -40,6 +46,7 @@ const Register = () => {
       const currentValue = formValues[currentField].value;
 
       if (currentValue === '') {
+        formHasError = true;
         newFormValues = {
           ...newFormValues,
           [currentField]: {
@@ -52,7 +59,27 @@ const Register = () => {
 
     setFormValues(newFormValues);
     console.log(newFormValues);
-    //call the register api hear
+    if (!formHasError) {
+      //call the register api hear
+      const result = await registerUser(
+        newFormValues.username.value,
+        newFormValues.password.value
+      );
+      console.log(result.name);
+      if (result.name) {
+        //therre is some error
+        if (
+          result.name === 'UserAlreadyExistsError' ||
+          result.name === 'PasswordLengthError'
+        ) {
+          setRegistrationError(result.error);
+        }
+      } else {
+        //success. happy path
+        //TODO: Set token
+        navigate('/');
+      }
+    }
   };
 
   return (
@@ -153,6 +180,15 @@ const Register = () => {
               formValues.password.error && formValues.password.errorMessage
             }
           />
+          <Typography
+            sx={{
+              textAlign: 'left',
+              marginBottom: '10px',
+              fontSize: '10px',
+              color: 'red',
+            }}>
+            {registrationError}
+          </Typography>
           <Button
             color='violet'
             variant='contained'

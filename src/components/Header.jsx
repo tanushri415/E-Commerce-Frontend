@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -128,7 +127,7 @@ export default function Header() {
   );
 
   return (
-    <Box sx={{marginBottom: "10px"}}>
+    <Box sx={{ marginBottom: '10px' }}>
       <AppBar position='sticky' sx={{ backgroundColor: 'black' }}>
         <Toolbar>
           <IconButton
