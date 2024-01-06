@@ -67,7 +67,7 @@ const Register = () => {
       );
       console.log(result.name);
       if (result.name) {
-        //therre is some error
+        //there is some error
         if (
           result.name === 'UserAlreadyExistsError' ||
           result.name === 'PasswordLengthError'
@@ -190,10 +190,11 @@ const Register = () => {
             {registrationError}
           </Typography>
           <Button
-            color='violet'
+            color='gold'
             variant='contained'
             size='medium'
-            type='submit'>
+            type='submit'
+            href='/register'>
             Register
           </Button>
         </Box>
