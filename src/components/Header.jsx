@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,12 +8,13 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Link from '@mui/material/Link';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import './header.css';
+import { Divider, Drawer, MenuList } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { getProductCategories } from '../api';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,88 +57,68 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [productCategories, setProductCategories] = useState([]);
+  useEffect(() => {
+    const fetchProductCategories = async () => {
+      const categories = await getProductCategories();
+      setProductCategories(categories);
+    };
+    fetchProductCategories();
+  }, []);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [open, setState] = useState(false);
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setState(open);
   };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size='large'
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'>
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
 
   return (
     <Box sx={{ marginBottom: '10px' }}>
-      <AppBar position='sticky' sx={{ backgroundColor: 'black' }}>
+      <AppBar
+        sx={{
+          backgroundColor: '#131921',
+          position: 'static',
+          gap: '15px',
+        }}>
         <Toolbar>
           <IconButton
             size='large'
             edge='start'
             color='inherit'
-            aria-label='open drawer'
+            aria-label='menu'
+            onClick={toggleDrawer(true)}
             sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
+          <Drawer
+            anchor='left'
+            open={open}
+            variant='temporary'
+            //   onOpen={toggleDrawer(true)}
+            onClose={toggleDrawer(false)}>
+            <Box sx={{ padding: 2, height: 1 }}>
+              <IconButton sx={{ mb: 2 }} onClick={toggleDrawer(false)}>
+                <CloseIcon />
+              </IconButton>
+              <Divider sx={{ mb: 2 }} />
+              <Box>
+                <MenuList>
+                  {productCategories?.map((category, index) => {
+                    return (
+                      <MenuItem className='categoryDrawer__item' key={index}>
+                        {category}
+                      </MenuItem>
+                    );
+                  })}
+                </MenuList>
+              </Box>
+            </Box>
+          </Drawer>
           <Typography
             sx={{
               textIndent: '-500px',
@@ -148,7 +129,7 @@ export default function Header() {
               backgroundPositionY: '-51px',
               backgroundImage: `url("https://m.media-amazon.com/images/G/01/gno/sprites/nav-sprite-global-1x-reorg-privacy._CB587940754_.png")`,
             }}></Typography>
-          <Search sx={{ flexGrow: 1 }}>
+          <Search sx={{ flexGrow: 1, display: 'flex' }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -157,34 +138,43 @@ export default function Header() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          {/* <Box sx={{ flexGrow: 1 }} /> */}
-
-          <Box sx={{ display: 'flex' }}>
-            {/* <Link to={`/register`}>Hello, sign in</Link> */}
-            <Link
-              href={`/register`}
-              //   onClick={handleSignIn}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                color: 'white',
-                textTransform: 'none',
-              }}>
-              Hello, sign in
-            </Link>
-            <IconButton
-              size='large'
-              aria-label='show 4 cart items'
-              color='inherit'>
-              <Badge badgeContent={4} color='error'>
-                <ShoppingCartOutlinedIcon />
-              </Badge>
-            </IconButton>
+          <Box component='a' href='/login'>
+            <h4 className='headerText'>Hello,</h4>
+            <h4 className='headerText'>sign in</h4>
           </Box>
+          <Box component='a' href='#'>
+            <h4 className='headerText'>Returns</h4>
+            <h4 className='headerText'>Orders</h4>
+          </Box>
+          <IconButton
+            size='large'
+            aria-label='show 4 cart items'
+            color='inherit'
+            href={`/cart`}>
+            <Badge badgeContent={4} color='error'>
+              <ShoppingCartOutlinedIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          backgroundColor: '#232f3e',
+          color: 'white',
+          justifyContent: 'space-evenly',
+        }}
+        className='header_bottom'>
+        {productCategories?.map((category, index) => {
+          return (
+            <p className='categoryDrawer__item' key={index}>
+              {category}
+            </p>
+          );
+        })}
+        <p>Amazon Music</p>
+      </Box>
     </Box>
   );
 }
