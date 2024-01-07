@@ -18,3 +18,7 @@
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.categoryDrawer__item {
+    text-transform: capitalize;
+}
