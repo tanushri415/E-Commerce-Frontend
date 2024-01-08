@@ -66,6 +66,18 @@ const getProductCategories = async () => {
     }
 };
 
-export { registerUser, loginUser, getAllProducts, getProductCategories };
+const getProductsOfSpecificCategory = async (category) => {
+    try {
+        var products = [];
+        await fetch(`${productsBaseUrl}/category/${category}`)
+            .then((res) => res.json())
+            .then((data) => products = data);
+        return products;
+    } catch (error) {
+        console.error('something went wrong while getting all product for category!', error);
+    }
+};
+
+export { registerUser, loginUser, getAllProducts, getProductCategories, getProductsOfSpecificCategory };
 
 

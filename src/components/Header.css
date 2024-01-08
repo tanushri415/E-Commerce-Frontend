@@ -21,4 +21,12 @@
 
 .categoryDrawer__item {
     text-transform: capitalize;
+    text-decoration: none;
+    color: black;
+}
+
+.category__item {
+    text-transform: capitalize;
+    text-decoration: none;
+    color: white;
 }

@@ -58,13 +58,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const [productCategories, setProductCategories] = useState([]);
+  
   useEffect(() => {
     const fetchProductCategories = async () => {
       const categories = await getProductCategories();
       setProductCategories(categories);
     };
+    
     fetchProductCategories();
   }, []);
+
+
 
   const [open, setState] = useState(false);
   const toggleDrawer = (open) => (event) => {
@@ -111,7 +115,12 @@ export default function Header() {
                   {productCategories?.map((category, index) => {
                     return (
                       <MenuItem className='categoryDrawer__item' key={index}>
-                        {category}
+                        <a
+                          href={`/?category=${category}`}
+                          className='categoryDrawer__item'
+                          key={index}>
+                          {category}
+                        </a>
                       </MenuItem>
                     );
                   })}
@@ -168,12 +177,12 @@ export default function Header() {
         className='header_bottom'>
         {productCategories?.map((category, index) => {
           return (
-            <p className='categoryDrawer__item' key={index}>
+            <a href={`/?category=${category}`} className='category__item' key={index}>
               {category}
-            </p>
+            </a>
           );
         })}
-        <p>Amazon Music</p>
+        <a>Amazon Music</a>
       </Box>
     </Box>
   );
