@@ -14,7 +14,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import './header.css';
 import { Divider, Drawer, MenuList } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { getProductCategories } from '../api';
+import { productApi } from '../api';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,7 +61,7 @@ export default function Header() {
 
   useEffect(() => {
     const fetchProductCategories = async () => {
-      const categories = await getProductCategories();
+      const categories = await productApi.getProductCategories();
       setProductCategories(categories);
     };
 
@@ -186,7 +186,9 @@ export default function Header() {
             </a>
           );
         })}
-        <a href='https://music.amazon.com/?ref=IAM_ACQ-Welcome-PrimeGeneric-Android-NA-US'>
+        <a
+          className='category__item'
+          href='https://music.amazon.com/?ref=IAM_ACQ-Welcome-PrimeGeneric-Android-NA-US'>
           Amazon Music
         </a>
       </Box>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getAllProducts, getProductsOfSpecificCategory } from '../api';
+import { productApi } from '../api';
 import Header from './Header';
-import './Home.css';
 import Product from './Product';
 import { useSearchParams } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 export const Home = () => {
   const [products, setProducts] = useState([]);
@@ -13,13 +13,13 @@ export const Home = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      await getAllProducts().then((data) => setProducts(data));
+      await productApi.getAllProducts().then((data) => setProducts(data));
     };
 
     const fetchProductsForCategory = async (category) => {
-      await getProductsOfSpecificCategory(category).then((data) =>
-        setProducts(data)
-      );
+      await productApi
+        .getProductsOfSpecificCategory(category)
+        .then((data) => setProducts(data));
     };
 
     //if there is query string for category then call api to get products for category or all products
@@ -30,16 +30,27 @@ export const Home = () => {
     }
   }, []);
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'auto',
+        minHeight: '100vh',
+      }}>
       <Header />
-      <div className='home'>
-        <div className='productItems'>
-          {products.map((item, index) => (
-            <Product key={index} item={item} />
-          ))}
-        </div>
-      </div>
-    </>
+      <Box
+        sx={{
+          backgroundColor: '#EAEDED',
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {products.map((item, index) => (
+          <Product key={index} item={item} />
+        ))}
+      </Box>
+    </Box>
   );
 };
 

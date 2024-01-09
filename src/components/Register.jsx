@@ -2,7 +2,7 @@ import { Box, Container, InputLabel, Stack, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { registerUser } from '../api';
+import { userApi } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -61,7 +61,7 @@ const Register = () => {
     console.log(newFormValues);
     if (!formHasError) {
       //call the register api hear
-      const result = await registerUser(
+      const result = await userApi.registerUser(
         newFormValues.username.value,
         newFormValues.password.value
       );
