@@ -5,8 +5,6 @@
     justify-content: flex-end;
     margin: 10px;
     padding: 10px;
-    /* width: 400px; */
-    /* max-height: 400px; */
     max-width: 300px;
     min-width: 300px;
     background-color: white;
@@ -17,6 +15,7 @@
 
 .detailed {
     max-height: unset;
+    max-width: 400px;
 }
 
 .product__image {
@@ -24,7 +23,7 @@
     margin-right: auto;
     width: 273px;
     height: 343px;
-    /* height: 100px; */
+    display: inherit;
     margin-bottom: 15%;
     margin-top: 25%;
 }
