@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Product from './Product';
 import { productApi } from '../api';
 import { Box } from '@mui/material';
+import './Product.css';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
@@ -11,10 +12,10 @@ const ProductDetails = () => {
   let { productId } = useParams();
 
   useEffect(() => {
-    async function getBook() {
+    async function getProduct() {
       setProduct(await productApi.getProductByid(productId));
     }
-    if (productId !== null && productId !== undefined) getBook();
+    if (productId !== null && productId !== undefined) getProduct();
   }, [productId]);
 
   return (
@@ -35,6 +36,7 @@ const ProductDetails = () => {
           justifyContent: 'center',
         }}>
         <Product detailMode={true} key={product?.id} item={product} />
+        {/* <button className='backToProducts'>Back to Products</button> */}
       </Box>
     </Box>
   );

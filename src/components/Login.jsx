@@ -83,6 +83,7 @@ const Login = () => {
         //success. happy path
         //TODO: Set token
         window.localStorage.setItem('token', result.token);
+        window.localStorage.setItem('user', JSON.stringify(result.user));
         navigate('/');
       }
     }

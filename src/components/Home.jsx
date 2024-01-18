@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { productApi } from '../api';
 import Product from './Product';
 import { useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import ProductFilter from './ProductFilter';
 import Header from './Header';
+import { CartContext } from './contextAPI';
 
 const defaultFilterState = {
   price: { minPrice: null, maxPrice: null },
@@ -16,6 +17,8 @@ export const Home = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   const [filter, setFilter] = useState(defaultFilterState);
+  const { setCart } = useContext(CartContext);
+  // console.log(state);
 
   let [searchParams] = useSearchParams();
   const category = searchParams.get('category');
@@ -29,6 +32,7 @@ export const Home = () => {
         setMaxPrice(max);
         //find maximum price
         setMinPrice(min);
+
         setFilteredProducts(data);
         setProducts(data);
       });

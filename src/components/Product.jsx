@@ -23,7 +23,17 @@ const Product = ({ item, detailMode = false }) => {
         <span className='product__price__currency'>$</span>
         <span className='product__price'>{item?.price}</span>
       </span>
-      <button className='productButton'>Add to cart</button>
+      <button
+        className='productButton'
+        onClick={(e) => {
+          e.addToCart(item.id);
+        }}>
+        Add to cart
+      </button>
+      {detailMode === true && (
+        <button className='backToProducts'>Back to products</button>
+      )}
+
       {/*
           <p>🌟</p>
           <p>🌟</p>

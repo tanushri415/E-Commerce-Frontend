@@ -5,6 +5,8 @@ import Login from './components/Login';
 import ShoppingCart from './components/ShoppingCart';
 import Home from './components/Home';
 import ProductDetails from './components/ProductDetails';
+import { Context } from './components/contextAPI';
+import Orders from './components/Orders';
 
 export default function App() {
   return (
@@ -13,13 +15,16 @@ export default function App() {
       disableGutters
       sx={{ backgroundColor: '#EAEDED' }}>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/product/:productId' element={<ProductDetails />} />
-          <Route path='/cart' element={<ShoppingCart />} />
-        </Routes>
+        <Context>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/product/:productId' element={<ProductDetails />} />
+            <Route path='/cart' element={<ShoppingCart />} />
+            <Route path='/orders' element={<Orders />} />
+          </Routes>
+        </Context>
       </BrowserRouter>
     </Container>
   );
