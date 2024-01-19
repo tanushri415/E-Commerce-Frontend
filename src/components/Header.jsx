@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ import './header.css';
 import { Divider, Drawer, MenuList } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { productApi } from '../api';
-// import { Cartcontext } from './contextAPI';
+import { CartContext } from '../context/cart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,6 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { cartItems } = useContext(CartContext);
   const [productCategories, setProductCategories] = useState([]);
 
   useEffect(() => {
@@ -85,7 +86,7 @@ export default function Header() {
       <AppBar
         sx={{
           backgroundColor: '#131921',
-          position: 'static',
+          position: 'relative',
           gap: '15px',
         }}>
         <Toolbar>
@@ -160,10 +161,10 @@ export default function Header() {
 
           <IconButton
             size='large'
-            aria-label='show 4 cart items'
+            aria-label={`show ${cartItems?.length} items`}
             color='inherit'
             href={`/cart`}>
-            <Badge badgeContent={4} color='error'>
+            <Badge badgeContent={cartItems?.length} color='error' showZero>
               <ShoppingCartOutlinedIcon />
             </Badge>
           </IconButton>

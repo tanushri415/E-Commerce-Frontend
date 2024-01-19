@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { productApi } from '../api';
 import Product from './Product';
 import { useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import ProductFilter from './ProductFilter';
 import Header from './Header';
-import { CartContext } from './contextAPI';
 
 const defaultFilterState = {
   price: { minPrice: null, maxPrice: null },
@@ -17,8 +16,6 @@ export const Home = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
   const [filter, setFilter] = useState(defaultFilterState);
-  const { setCart } = useContext(CartContext);
-  // console.log(state);
 
   let [searchParams] = useSearchParams();
   const category = searchParams.get('category');
@@ -62,26 +59,22 @@ export const Home = () => {
   useEffect(() => {
     if (filter !== null && filter !== defaultFilterState) {
       var filteredProds = products;
-      console.log('filter', filter, 'filteredProds', filteredProds);
       if (filter.price !== null) {
         if (filter.price.minPrice !== null) {
           filteredProds = filteredProds.filter(
             (product) => product.price >= filter.price.minPrice
           );
-          console.log('min price', filteredProds.length);
         }
         if (filter.price.maxPrice !== null) {
           filteredProds = filteredProds.filter(
             (product) => product.price <= filter.price.maxPrice
           );
-          console.log('max price', filteredProds.length);
         }
       }
       if (filter.rating !== null) {
         filteredProds = filteredProds.filter(
           (product) => product.rating.rate >= filter.rating
         );
-        console.log('rating', filteredProds.length);
       }
       setFilteredProducts(filteredProds);
     }

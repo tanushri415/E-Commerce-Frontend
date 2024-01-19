@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import './Product.css';
+import { CartContext } from '../context/cart';
 
 const Product = ({ item, detailMode = false }) => {
+  const { addToCart } = useContext(CartContext);
   return (
     <div className={`product ${detailMode ? 'detailed' : ''}`}>
       <a href={`/product/${item?.id}`}>
@@ -25,8 +28,8 @@ const Product = ({ item, detailMode = false }) => {
       </span>
       <button
         className='productButton'
-        onClick={(e) => {
-          e.addToCart(item.id);
+        onClick={() => {
+          addToCart(item);
         }}>
         Add to cart
       </button>
