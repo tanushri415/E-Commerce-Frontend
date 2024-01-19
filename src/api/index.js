@@ -2,6 +2,7 @@ const baseUrl = "/api";
 const userBaseUrl = `${baseUrl}/users`;
 const productsBaseUrl = 'https://fakestoreapi.com/products';
 
+//userApi
 const registerUser = async (username, password) => {
     try {
         const resp =
@@ -41,7 +42,7 @@ const loginUser = async (username, password) => {
     }
 };
 
-
+//productApi
 const getAllProducts = async () => {
     try {
         var products = [];
@@ -66,6 +67,35 @@ const getProductCategories = async () => {
     }
 };
 
-export { registerUser, loginUser, getAllProducts, getProductCategories };
+const getProductsOfSpecificCategory = async (category) => {
+    try {
+        var products = [];
+        await fetch(`${productsBaseUrl}/category/${category}`)
+            .then((res) => res.json())
+            .then((data) => products = data);
+        return products;
+    } catch (error) {
+        console.error('something went wrong while getting all product for category!', error);
+    }
+};
 
+const getProductByid = async (productId) => {
+    try {
+        var product = [];
+        await fetch(`${productsBaseUrl}/${productId}`)
+            .then((res) => res.json())
+            .then((data) => product = data);
+        return product;
+    } catch (error) {
+        console.error(`something went wrong while getting product with id ${productId}!`, error);
+    }
+};
 
+//cartApi
+
+//constants for export
+const userApi = { loginUser, registerUser };
+const productApi = { getAllProducts, getProductCategories, getProductsOfSpecificCategory, getProductByid };
+const cartApi = {};
+
+export { userApi, productApi, cartApi };

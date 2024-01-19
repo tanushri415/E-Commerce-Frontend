@@ -2,7 +2,7 @@ import { Box, Container, InputLabel, Stack, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { loginUser } from '../api';
+import { userApi } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -38,8 +38,8 @@ const Login = () => {
   const handleRegisterAccount = (e) => {
     e.preventDefault();
     navigate('/register');
-    };
-    
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let formHasError = false;
@@ -66,7 +66,7 @@ const Login = () => {
     console.log(newFormValues);
     if (!formHasError) {
       //call the register api hear
-      const result = await loginUser(
+      const result = await userApi.loginUser(
         newFormValues.username.value,
         newFormValues.password.value
       );
@@ -81,8 +81,9 @@ const Login = () => {
         }
       } else {
         //success. happy path
-          //TODO: Set token
-             window.localStorage.setItem('token', result.token);
+        //TODO: Set token
+        window.localStorage.setItem('token', result.token);
+        window.localStorage.setItem('user', JSON.stringify(result.user));
         navigate('/');
       }
     }

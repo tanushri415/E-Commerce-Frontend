@@ -14,7 +14,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import './header.css';
 import { Divider, Drawer, MenuList } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { getProductCategories } from '../api';
+import { productApi } from '../api';
+// import { Cartcontext } from './contextAPI';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,11 +59,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const [productCategories, setProductCategories] = useState([]);
+
   useEffect(() => {
     const fetchProductCategories = async () => {
-      const categories = await getProductCategories();
+      const categories = await productApi.getProductCategories();
       setProductCategories(categories);
     };
+
     fetchProductCategories();
   }, []);
 
@@ -111,7 +114,12 @@ export default function Header() {
                   {productCategories?.map((category, index) => {
                     return (
                       <MenuItem className='categoryDrawer__item' key={index}>
-                        {category}
+                        <a
+                          href={`/?category=${category}`}
+                          className='categoryDrawer__item'
+                          key={index}>
+                          {category}
+                        </a>
                       </MenuItem>
                     );
                   })}
@@ -119,16 +127,19 @@ export default function Header() {
               </Box>
             </Box>
           </Drawer>
-          <Typography
-            sx={{
-              textIndent: '-500px',
-              width: '97px',
-              height: '30px',
-              float: 'left',
-              backgroundPositionX: '-10px',
-              backgroundPositionY: '-51px',
-              backgroundImage: `url("https://m.media-amazon.com/images/G/01/gno/sprites/nav-sprite-global-1x-reorg-privacy._CB587940754_.png")`,
-            }}></Typography>
+          <a href='/'>
+            <Typography
+              sx={{
+                textIndent: '-500px',
+                width: '97px',
+                height: '30px',
+                float: 'left',
+                backgroundPositionX: '-10px',
+                backgroundPositionY: '-51px',
+                cursor: 'pointer',
+                backgroundImage: `url("https://m.media-amazon.com/images/G/01/gno/sprites/nav-sprite-global-1x-reorg-privacy._CB587940754_.png")`,
+              }}></Typography>
+          </a>
           <Search sx={{ flexGrow: 1, display: 'flex' }}>
             <SearchIconWrapper>
               <SearchIcon />
@@ -142,10 +153,11 @@ export default function Header() {
             <h4 className='headerText'>Hello,</h4>
             <h4 className='headerText'>sign in</h4>
           </Box>
-          <Box component='a' href='#'>
+          <Box component='a' href='/orders'>
             <h4 className='headerText'>Returns</h4>
             <h4 className='headerText'>Orders</h4>
           </Box>
+
           <IconButton
             size='large'
             aria-label='show 4 cart items'
@@ -168,12 +180,19 @@ export default function Header() {
         className='header_bottom'>
         {productCategories?.map((category, index) => {
           return (
-            <p className='categoryDrawer__item' key={index}>
+            <a
+              href={`/?category=${category}`}
+              className='category__item'
+              key={index}>
               {category}
-            </p>
+            </a>
           );
         })}
-        <p>Amazon Music</p>
+        <a
+          className='category__item'
+          href='https://music.amazon.com/?ref=IAM_ACQ-Welcome-PrimeGeneric-Android-NA-US'>
+          Amazon Music
+        </a>
       </Box>
     </Box>
   );
