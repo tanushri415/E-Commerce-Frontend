@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import './Product.css';
 import { CartContext } from '../context/cart';
+import { useNavigate } from 'react-router-dom';
 
 const Product = ({ item, detailMode = false }) => {
   const { addToCart } = useContext(CartContext);
+  let navigate = useNavigate();
   return (
     <div className={`product ${detailMode ? 'detailed' : ''}`}>
       <a href={`/product/${item?.id}`}>
@@ -34,7 +36,13 @@ const Product = ({ item, detailMode = false }) => {
         Add to cart
       </button>
       {detailMode === true && (
-        <button className='backToProducts'>Back to products</button>
+        <button
+          className='productButton'
+          onClick={() => {
+            navigate(-1);
+          }}>
+          Back to products
+        </button>
       )}
 
       {/*

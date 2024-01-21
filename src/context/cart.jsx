@@ -42,6 +42,16 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const removeProductFromCart = (item) => {
+    const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (isItemInCart.quantity >= 1) {
+      setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id));
+    } else {
+      //do nothing
+    }
+  }
+
   const clearCart = () => {
     setCartItems([]);
   };
@@ -50,7 +60,7 @@ export const CartProvider = ({ children }) => {
     return cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
-    );
+    ).toFixed(2);
   };
 
   useEffect(() => {
@@ -72,6 +82,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         clearCart,
         getCartTotal,
+        removeProductFromCart,
       }}>
       {children}
     </CartContext.Provider>

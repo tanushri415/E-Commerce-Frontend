@@ -34,6 +34,7 @@ const ProductDetails = () => {
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'center',
+          marginTop: '100px',
         }}>
         <Product detailMode={true} key={product?.id} item={product} />
         {/* <button className='backToProducts'>Back to Products</button> */}

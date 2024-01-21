@@ -48,7 +48,9 @@ const Order = ({ order }) => {
 
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{fontWeight: 'bold'}}>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        sx={{ fontWeight: 'bold' }}>
         Order Placed -{' '}
         {new Date(cart?.date).toLocaleDateString(undefined, {
           dateStyle: 'long',
@@ -76,7 +78,12 @@ const Order = ({ order }) => {
                   display: 'inherit',
                 }}></Box>
             </a>
-            <Box display={'flex'} flexDirection={'column'} gap={'5px'}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '5px',
+              }}>
               <Typography variant='h6'>{product?.title}</Typography>
               <Typography variant='body2'>{product?.description}</Typography>
               <Typography variant='caption'>

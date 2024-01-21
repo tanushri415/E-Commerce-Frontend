@@ -95,6 +95,7 @@ export const Home = () => {
           flexWrap: 'nowrap',
           flexDirection: 'row',
           gap: '0px',
+          marginTop: '100px',
         }}>
         {products?.length > 0 && (
           <ProductFilter

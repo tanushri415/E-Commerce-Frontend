@@ -82,7 +82,13 @@ export default function Header() {
   };
 
   return (
-    <Box sx={{ marginBottom: '10px' }}>
+    <Box
+      sx={{
+        marginBottom: '10px',
+        position: 'fixed',
+        width: '100vw',
+        zIndex: 100,
+      }}>
       <AppBar
         sx={{
           backgroundColor: '#131921',
