@@ -19,10 +19,16 @@ export const Home = () => {
 
   let [searchParams] = useSearchParams();
   const category = searchParams.get('category');
+  let search = searchParams.get('search');
 
   useEffect(() => {
     const fetchProducts = async () => {
       await productApi.getAllProducts().then((data) => {
+        if (search !== undefined && search !== null) {
+          data = data.filter((product) =>
+            product.title.toUpperCase().includes(search.toUpperCase())
+          );
+        }
         var max = Math.max(...data.map((product) => product.price), 100);
         var min = Math.min(...data.map((product) => product.price), 0);
         //find minimum price
@@ -37,6 +43,12 @@ export const Home = () => {
 
     const fetchProductsForCategory = async (category) => {
       await productApi.getProductsOfSpecificCategory(category).then((data) => {
+        if (search !== undefined && search !== null) {
+          data = data.filter((product) =>
+            product.title.toUpperCase().includes(search.toUpperCase())
+          );
+        }
+
         var max = Math.max(...data.map((product) => product.price), 100);
         var min = Math.min(...data.map((product) => product.price), 0);
         //find minimum price
