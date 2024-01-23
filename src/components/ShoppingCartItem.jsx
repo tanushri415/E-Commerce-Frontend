@@ -52,21 +52,23 @@ const ShoppingCartItem = ({ cartItem }) => {
           }}>
           <Button
             size='small'
-            variant='text'
-            sx={{ width: '10px' }}
-            onClick={() => addToCart(cartItem)}>
-            +
+            sx={{ width: '10px', fontSize: 'large' }}
+            variant='contained'
+            onClick={() => removeFromCart(cartItem)}>
+            -
           </Button>
-          <Typography
-            variant='caption'
-            sx={{ flexGrow: 1, textAlign: 'end', color: 'grey' }}>
-            {cartItem?.quantity}
-          </Typography>
           <Button
             size='small'
             variant='text'
-            onClick={() => removeFromCart(cartItem)}>
-            -
+            sx={{ fontWeight: 'bold', cursor: 'none', fontSize: 'large' }}>
+            {cartItem?.quantity}
+          </Button>
+          <Button
+            size='small'
+            variant='contained'
+            sx={{ width: '10px', fontSize: 'large' }}
+            onClick={() => addToCart(cartItem)}>
+            +
           </Button>
         </Box>
         <Typography variant='caption'>Price ${cartItem?.price}</Typography>

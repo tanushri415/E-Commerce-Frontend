@@ -8,6 +8,7 @@ import ProductDetails from './components/ProductDetails';
 import { Context } from './components/contextAPI';
 import Orders from './components/Orders';
 import { CartProvider } from './context/cart';
+import Checkout from './components/Checkout';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path='/product/:productId' element={<ProductDetails />} />
             <Route path='/cart' element={<ShoppingCart />} />
             <Route path='/orders' element={<Orders />} />
+            <Route path='/checkout' element={<Checkout />} />
           </Routes>
         </CartProvider>
       </BrowserRouter>

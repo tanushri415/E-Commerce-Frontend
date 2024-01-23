@@ -195,11 +195,11 @@ export default function Header() {
             </a>
           );
         })}
-        <a
+        {/* <a
           className='category__item'
           href='https://music.amazon.com/?ref=IAM_ACQ-Welcome-PrimeGeneric-Android-NA-US'>
           Amazon Music
-        </a>
+        </a> */}
       </Box>
     </Box>
   );
