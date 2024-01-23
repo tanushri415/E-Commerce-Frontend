@@ -50,9 +50,19 @@ const ShoppingCart = () => {
             </Box>
           </>
         ) : (
-          <div>nothing here</div>
+          <Typography variant='h6' align='left' gutterBottom>
+            Your Shopping Cart is empty
+          </Typography>
         )}
       </Box>
+      <Button
+        color='gold'
+        width='30px'
+        variant='contained'
+        size='medium'
+        href='/checkout'>
+        Continue to Checkout
+      </Button>
     </Box>
   );
 };

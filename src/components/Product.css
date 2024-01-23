@@ -85,3 +85,17 @@
 
 }
 
+.new-btn {
+    background: #4bf0d4;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color:#a88734 #9c7e31 #846a29;
+    color: #111;
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+}
