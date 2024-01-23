@@ -1,6 +1,8 @@
-const baseUrl = "/api";
+const baseUrl = import.meta.env.VITE_API_BASE ? import.meta.env.VITE_API_BASE : "/api";
+console.log(baseUrl);
 const userBaseUrl = `${baseUrl}/users`;
 const productsBaseUrl = 'https://fakestoreapi.com/products';
+// const productsBaseUrl = `${baseUrl}/products`;
 
 //userApi
 const registerUser = async (username, password) => {
