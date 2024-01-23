@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import './header.css';
+import './Header.css';
 import { Divider, Drawer, MenuList } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { productApi } from '../api';
