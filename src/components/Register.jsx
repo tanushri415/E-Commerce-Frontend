@@ -58,14 +58,12 @@ const Register = () => {
     }
 
     setFormValues(newFormValues);
-    console.log(newFormValues);
     if (!formHasError) {
       //call the register api hear
       const result = await userApi.registerUser(
         newFormValues.username.value,
         newFormValues.password.value
       );
-      console.log(result.name);
       if (result.name) {
         //there is some error
         if (

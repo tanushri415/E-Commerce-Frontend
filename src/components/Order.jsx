@@ -29,9 +29,9 @@ const Order = ({ order }) => {
         fetchProduct(productInCart.productId)
       )
     )
-        .then((products) => {
-            var cartVar = { ...order };
-            cartVar.products = [];
+      .then((products) => {
+        var cartVar = { ...order };
+        cartVar.products = [];
         order?.products?.map((productInCart, productIndex) => {
           var productFound = products.filter(
             (product) => product.id === productInCart.productId
@@ -44,15 +44,22 @@ const Order = ({ order }) => {
         setCart(cartVar);
       })
       .catch((err) => console.error(err));
-    console.log('order', order);
   }, []);
+
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        Order Placed -
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        sx={{ fontWeight: 'bold' }}>
+        Order Placed -{' '}
         {new Date(cart?.date).toLocaleDateString(undefined, {
           dateStyle: 'long',
-        })}
+        })}{' '}
+        -{' $'}
+        {cart?.products.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        )}
       </AccordionSummary>
       <AccordionDetails>
         {cart?.products?.map((product) => (
@@ -71,11 +78,19 @@ const Order = ({ order }) => {
                   display: 'inherit',
                 }}></Box>
             </a>
-            <Box display={'flex'} flexDirection={'column'} gap={'5px'}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '5px',
+              }}>
               <Typography variant='h6'>{product?.title}</Typography>
               <Typography variant='body2'>{product?.description}</Typography>
               <Typography variant='caption'>
                 Quantity: {product?.quantity}
+              </Typography>
+              <Typography variant='caption'>
+                Price: ${product?.price}
               </Typography>
             </Box>
           </Box>

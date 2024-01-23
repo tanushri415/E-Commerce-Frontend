@@ -7,6 +7,7 @@ import Home from './components/Home';
 import ProductDetails from './components/ProductDetails';
 import { Context } from './components/contextAPI';
 import Orders from './components/Orders';
+import { CartProvider } from './context/cart';
 
 export default function App() {
   return (
@@ -15,7 +16,7 @@ export default function App() {
       disableGutters
       sx={{ backgroundColor: '#EAEDED' }}>
       <BrowserRouter>
-        <Context>
+        <CartProvider>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/register' element={<Register />} />
@@ -24,7 +25,7 @@ export default function App() {
             <Route path='/cart' element={<ShoppingCart />} />
             <Route path='/orders' element={<Orders />} />
           </Routes>
-        </Context>
+        </CartProvider>
       </BrowserRouter>
     </Container>
   );
