@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Card, Typography } from '@mui/material';
 import Header from './Header';
 import { CartContext } from '../context/cart';
 import { useContext } from 'react';
@@ -44,9 +44,21 @@ const ShoppingCart = () => {
                   <ShoppingCartItem key={cartItem.id} cartItem={cartItem} />
                 ))}
               </Box>
-              <Typography variant='h6' align='right' sx={{ marginTop: 2 }}>
+              <Card
+                variant='outlined'
+                align='right'
+                sx={{ marginTop: 2, minWidth: 275 }}>
+                <h4>Order Summary</h4>
                 Total:&nbsp;${getCartTotal()}
-              </Typography>
+                <Button
+                  color='gold'
+                  width='30px'
+                  variant='contained'
+                  size='medium'
+                  href='/checkout'>
+                  Continue to Checkout
+                </Button>
+              </Card>
             </Box>
           </>
         ) : (
@@ -55,14 +67,6 @@ const ShoppingCart = () => {
           </Typography>
         )}
       </Box>
-      <Button
-        color='gold'
-        width='30px'
-        variant='contained'
-        size='medium'
-        href='/checkout'>
-        Continue to Checkout
-      </Button>
     </Box>
   );
 };

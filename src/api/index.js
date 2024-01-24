@@ -2,6 +2,7 @@ const baseUrl = import.meta.env.VITE_API_BASE ? import.meta.env.VITE_API_BASE : 
 const userBaseUrl = `${baseUrl}/users`;
 // const productsBaseUrl = 'https://fakestoreapi.com/products';
 const productsBaseUrl = `${baseUrl}/products`;
+const cartsBaseUrl = `${baseUrl}/carts`;
 
 //userApi
 const registerUser = async (username, password) => {
@@ -93,10 +94,22 @@ const getProductByid = async (productId) => {
 };
 
 //cartApi
+const getUserCarts = async (userId) => {
+    try {
+        var carts = [];
+        await fetch(`${cartsBaseUrl}/user/${userId}`)
+            .then((res) => res.json())
+            .then((data) => carts = data);
+        console.info("carts in api", carts);
+        return carts;
+    } catch (error) {
+        console.error(`something went wrong while getting carts for user with id ${userId}!`, error);
+    }
+};
 
 //constants for export
 const userApi = { loginUser, registerUser };
 const productApi = { getAllProducts, getProductCategories, getProductsOfSpecificCategory, getProductByid };
-const cartApi = {};
+const cartApi = { getUserCarts };
 
 export { userApi, productApi, cartApi };

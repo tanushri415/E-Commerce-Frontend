@@ -70,8 +70,9 @@ const Login = () => {
         newFormValues.username.value,
         newFormValues.password.value
       );
-      console.log(result.name);
+
       if (result.name) {
+        console.log(result.name);
         //there is some error
         if (
           result.name === 'InvalidCredentialsError' ||
