@@ -53,10 +53,13 @@ const Orders = () => {
           <Order order={order} key={order.id} />
         ))}
       </Box>
-      {orders?.length === 0 ?
+      {orders?.length === 0 ? (
         <Typography variant='h6' align='left' gutterBottom>
-          You don't have any previous Orders!!
-        </Typography> : <></>}
+          You do not have any previous Orders!!
+        </Typography>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };
