@@ -7,26 +7,15 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from 'react';
+import { productApi } from '../api';
 
 const Order = ({ order }) => {
   const [cart, setCart] = useState(null);
 
   useEffect(() => {
-    const fetchProduct = async (productid) => {
-      try {
-        const res = await fetch(
-          `https://fakestoreapi.com/products/${productid}`
-        );
-        const json = await res.json();
-        return json;
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     Promise.all(
       order.products.map((productInCart) =>
-        fetchProduct(productInCart.productId)
+        productApi.getProductByid(productInCart.productId)
       )
     )
       .then((products) => {

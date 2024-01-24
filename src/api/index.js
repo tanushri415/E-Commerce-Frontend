@@ -1,6 +1,5 @@
 const baseUrl = import.meta.env.VITE_API_BASE ? import.meta.env.VITE_API_BASE : "/api";
 const userBaseUrl = `${baseUrl}/users`;
-// const productsBaseUrl = 'https://fakestoreapi.com/products';
 const productsBaseUrl = `${baseUrl}/products`;
 const cartsBaseUrl = `${baseUrl}/carts`;
 
