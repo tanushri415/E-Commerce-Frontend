@@ -64,6 +64,7 @@ const Register = () => {
         newFormValues.username.value,
         newFormValues.password.value
       );
+      console.log(result);
       if (result.name) {
         //there is some error
         if (
@@ -75,9 +76,13 @@ const Register = () => {
       } else {
         //success. happy path
         //TODO: Set token
+        window.localStorage.setItem('token', result.token);
+        window.localStorage.setItem('user', JSON.stringify(result.user));
+
         navigate('/');
       }
     }
+    console.log('textfield');
   };
 
   return (
@@ -187,12 +192,7 @@ const Register = () => {
             }}>
             {registrationError}
           </Typography>
-          <Button
-            color='gold'
-            variant='contained'
-            size='medium'
-            type='submit'
-            href='/register'>
+          <Button color='gold' variant='contained' size='medium' type='submit'>
             Register
           </Button>
         </Box>
