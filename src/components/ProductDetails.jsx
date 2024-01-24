@@ -24,7 +24,6 @@ const ProductDetails = () => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        minHeight: '100vh',
       }}>
       <Header />
       <Box

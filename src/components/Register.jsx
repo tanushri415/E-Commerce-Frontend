@@ -64,7 +64,6 @@ const Register = () => {
         newFormValues.username.value,
         newFormValues.password.value
       );
-      console.log(result);
       if (result.name) {
         //there is some error
         if (
@@ -75,14 +74,12 @@ const Register = () => {
         }
       } else {
         //success. happy path
-        //TODO: Set token
         window.localStorage.setItem('token', result.token);
         window.localStorage.setItem('user', JSON.stringify(result.user));
 
         navigate('/');
       }
     }
-    console.log('textfield');
   };
 
   return (
@@ -91,20 +88,15 @@ const Register = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '40px',
       }}>
-      <Stack spacing={2} alignItems={'center'}>
+      <Stack spacing={2} alignItems={'center'} pt={"14px"}>
         <Typography
           sx={{
-            textIndent: '-500px',
             width: '103px',
             height: '31px',
             backgroundPositionX: '-5px',
             backgroundPositionY: '-130px',
             backgroundImage: `url("https://m.media-amazon.com/images/S/sash/mPGmT0r6IeTyIee.png")`,
-            verticalAlign: 'top',
-            marginTop: '5px',
-            marginBottom: '10px',
           }}
         />
         <Box

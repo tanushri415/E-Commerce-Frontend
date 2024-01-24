@@ -5,7 +5,6 @@ import Login from './components/Login';
 import ShoppingCart from './components/ShoppingCart';
 import Home from './components/Home';
 import ProductDetails from './components/ProductDetails';
-import { Context } from './components/contextAPI';
 import Orders from './components/Orders';
 import { CartProvider } from './context/cart';
 import Checkout from './components/Checkout';
@@ -15,7 +14,7 @@ export default function App() {
     <Container
       maxWidth={false}
       disableGutters
-      sx={{ backgroundColor: '#EAEDED' }}>
+      sx={{ backgroundColor: '#EAEDED', minHeight: '100vh' }}>
       <BrowserRouter>
         <CartProvider>
           <Routes>

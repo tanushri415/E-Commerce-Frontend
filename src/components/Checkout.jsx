@@ -15,7 +15,6 @@ const Checkout = () => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        minHeight: '100vh',
       }}>
       <Header />
       <Box sx={{ marginTop: '100px' }}>
