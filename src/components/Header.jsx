@@ -56,10 +56,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+// get usernamefrom local storage
 
 export default function Header() {
   const { cartItems } = useContext(CartContext);
   const [productCategories, setProductCategories] = useState([]);
+  const [username, setUserName] = useState('Sign In');
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchProductCategories = async () => {
@@ -68,6 +71,14 @@ export default function Header() {
     };
 
     fetchProductCategories();
+  }, []);
+
+  useEffect(() => {
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (user) {
+      setUserName(user.username);
+      setIsUserLoggedIn(true);
+    }
   }, []);
 
   const [open, setState] = useState(false);
@@ -156,9 +167,9 @@ export default function Header() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          <Box component='a' href='/login'>
+          <Box component='a' href={isUserLoggedIn ? '#' : '/login'}>
             <h4 className='headerText'>Hello,</h4>
-            <h4 className='headerText'>sign in</h4>
+            <h4 className='headerText'>{username}</h4>
           </Box>
           <Box component='a' href='/orders'>
             <h4 className='headerText'>Returns</h4>
@@ -174,6 +185,21 @@ export default function Header() {
               <ShoppingCartOutlinedIcon />
             </Badge>
           </IconButton>
+          <Box>
+            {isUserLoggedIn ? (
+              <Typography
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  window.localStorage.removeItem('token');
+                  window.localStorage.removeItem('user');
+                  window.location.reload(true);
+                }}>
+                Log Out
+              </Typography>
+            ) : (
+              <></>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

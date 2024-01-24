@@ -1,19 +1,31 @@
 import { useEffect, useState } from 'react';
 import Header from './Header';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Order from './Order';
+import { cartApi } from '../api';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/carts/user/1')
-      .then((res) => res.json())
-      .then((json) => {
-        setOrders(json);
-      })
-      .catch((err) => console.error(err));
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (user) {
+      setUser(user);
+    }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      cartApi
+        .getUserCarts(user.id)
+        .then((json) => {
+          setOrders(json);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [user]);
 
   return (
     <Box
@@ -41,6 +53,10 @@ const Orders = () => {
           <Order order={order} key={order.id} />
         ))}
       </Box>
+      {orders?.length === 0 ?
+        <Typography variant='h6' align='left' gutterBottom>
+          You don't have any previous Orders!!
+        </Typography> : <></>}
     </Box>
   );
 };

@@ -10,9 +10,9 @@ import { useEffect, useState } from 'react';
 
 const Order = ({ order }) => {
   const [cart, setCart] = useState(null);
+
   useEffect(() => {
     const fetchProduct = async (productid) => {
-      console.log('fetching data for productId:', productid);
       try {
         const res = await fetch(
           `https://fakestoreapi.com/products/${productid}`

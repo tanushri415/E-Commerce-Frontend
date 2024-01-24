@@ -1,8 +1,6 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '../context/cart';
 import { Typography, Box, IconButton } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 
@@ -70,16 +68,18 @@ const ShoppingCartItem = ({ cartItem }) => {
             onClick={() => addToCart(cartItem)}>
             +
           </Button>
+          <Box sx={{ display: 'flow' }}>
+            <span>Price</span>
+            <span>${cartItem?.price}</span>
+            <span>Total </span>
+            <span>${(cartItem?.price * cartItem?.quantity).toFixed(2)}</span>
+          </Box>
+          <IconButton
+            sx={{ justifyContent: 'flex-end' }}
+            onClick={() => removeProductFromCart(cartItem)}>
+            <DeleteIcon />
+          </IconButton>
         </Box>
-        <Typography variant='caption'>Price ${cartItem?.price}</Typography>
-        <Typography variant='caption'>
-          Total:&nbsp;${(cartItem?.price * cartItem?.quantity).toFixed(2)}
-        </Typography>
-        <IconButton
-          sx={{ justifyContent: 'flex-end' }}
-          onClick={() => removeProductFromCart(cartItem)}>
-          <DeleteIcon />
-        </IconButton>
       </Box>
     </Box>
   );
