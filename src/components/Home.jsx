@@ -85,7 +85,7 @@ export const Home = () => {
       }
       if (filter.rating !== null) {
         filteredProds = filteredProds.filter(
-          (product) => product.rating.rate >= filter.rating
+          (product) => product.rating >= filter.rating
         );
       }
       setFilteredProducts(filteredProds);
