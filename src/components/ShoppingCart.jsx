@@ -1,19 +1,21 @@
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import Header from './Header';
 import { CartContext } from '../context/cart';
 import { useContext } from 'react';
 import ShoppingCartItem from './ShoppingCartItem';
 import DeleteIcon from '@mui/icons-material/Delete';
+import OrderSummary from './OrderSummary';
+import SupportedPayments from './SupportedPayments';
 
 const ShoppingCart = () => {
-  const { cartItems, getCartTotal, clearCart } = useContext(CartContext);
+  const { cartItems, clearCart } = useContext(CartContext);
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        minHeight: '100vh',
+        
       }}>
       <Header />
       <Box
@@ -23,6 +25,7 @@ const ShoppingCart = () => {
           marginRight: '50px',
           marginBottom: '15px',
           marginTop: '100px',
+          
         }}>
         <Typography variant='h4' align='center' gutterBottom>
           My Shopping Cart
@@ -32,33 +35,23 @@ const ShoppingCart = () => {
             <Button endIcon={<DeleteIcon />} onClick={() => clearCart()}>
               Clear Cart
             </Button>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Box
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
                   marginRight: '50px',
                   gap: '25px',
+                  width: '66.66%',
                 }}>
                 {cartItems?.map((cartItem) => (
                   <ShoppingCartItem key={cartItem.id} cartItem={cartItem} />
                 ))}
               </Box>
-              <Card
-                variant='outlined'
-                align='right'
-                sx={{ marginTop: 2, minWidth: 275 }}>
-                <h4>Order Summary</h4>
-                Total:&nbsp;${getCartTotal()}
-                <Button
-                  color='gold'
-                  width='30px'
-                  variant='contained'
-                  size='medium'
-                  href='/checkout'>
-                  Continue to Checkout
-                </Button>
-              </Card>
+              <Stack sx={{ gap: '15px', width: '33.34%', maxWidth:  '450px'}}>
+                <OrderSummary showChkoutBtn={true} />
+                <SupportedPayments />
+              </Stack>
             </Box>
           </>
         ) : (

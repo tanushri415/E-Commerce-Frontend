@@ -17,7 +17,6 @@ const Orders = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
       cartApi
         .getUserCarts(user.id)
         .then((json) => {
@@ -33,7 +32,6 @@ const Orders = () => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        minHeight: '100vh',
       }}>
       <Header />
       <Box

@@ -10,7 +10,6 @@ export const CartProvider = ({ children }) => {
   );
 
   const addToCart = (item) => {
-    console.info('adding item to cart', item);
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
 
     if (isItemInCart) {

@@ -85,7 +85,7 @@ export const Home = () => {
       }
       if (filter.rating !== null) {
         filteredProds = filteredProds.filter(
-          (product) => product.rating.rate >= filter.rating
+          (product) => product.rating >= filter.rating
         );
       }
       setFilteredProducts(filteredProds);
@@ -98,7 +98,6 @@ export const Home = () => {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        minHeight: '100vh',
       }}>
       <Header />
       <Box

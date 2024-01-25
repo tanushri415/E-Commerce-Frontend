@@ -12,10 +12,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import './Header.css';
-import { Divider, Drawer, MenuList } from '@mui/material';
+import { Divider, Drawer, MenuList, Tooltip } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { productApi } from '../api';
 import { CartContext } from '../context/cart';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -171,35 +172,38 @@ export default function Header() {
             <h4 className='headerText'>Hello,</h4>
             <h4 className='headerText'>{username}</h4>
           </Box>
-          <Box component='a' href='/orders'>
-            <h4 className='headerText'>Returns</h4>
-            <h4 className='headerText'>Orders</h4>
-          </Box>
-
-          <IconButton
-            size='large'
-            aria-label={`show ${cartItems?.length} items`}
-            color='inherit'
-            href={`/cart`}>
-            <Badge badgeContent={cartItems?.length} color='error' showZero>
-              <ShoppingCartOutlinedIcon />
-            </Badge>
-          </IconButton>
-          <Box>
-            {isUserLoggedIn ? (
-              <Typography
-                sx={{ cursor: 'pointer' }}
+          {isUserLoggedIn && (
+            <Box component='a' href='/orders'>
+              <h4 className='headerText'>Returns</h4>
+              <h4 className='headerText'>Orders</h4>
+            </Box>
+          )}
+          <Tooltip title='Cart'>
+            <IconButton
+              size='large'
+              aria-label={`show ${cartItems?.length} items`}
+              color='inherit'
+              href={`/cart`}>
+              <Badge badgeContent={cartItems?.length} color='error' showZero>
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+          {isUserLoggedIn && (
+            <Tooltip title='Logout'>
+              <IconButton
+                size='large'
+                aria-label={`show ${cartItems?.length} items`}
+                color='inherit'
                 onClick={() => {
                   window.localStorage.removeItem('token');
                   window.localStorage.removeItem('user');
                   window.location.reload(true);
                 }}>
-                Log Out
-              </Typography>
-            ) : (
-              <></>
-            )}
-          </Box>
+                <LogoutOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </Toolbar>
       </AppBar>
       <Box
@@ -221,11 +225,6 @@ export default function Header() {
             </a>
           );
         })}
-        {/* <a
-          className='category__item'
-          href='https://music.amazon.com/?ref=IAM_ACQ-Welcome-PrimeGeneric-Android-NA-US'>
-          Amazon Music
-        </a> */}
       </Box>
     </Box>
   );

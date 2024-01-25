@@ -63,7 +63,6 @@ const Login = () => {
     }
 
     setFormValues(newFormValues);
-    console.log(newFormValues);
     if (!formHasError) {
       //call the register api hear
       const result = await userApi.loginUser(
@@ -72,7 +71,6 @@ const Login = () => {
       );
 
       if (result.name) {
-        console.log(result.name);
         //there is some error
         if (
           result.name === 'InvalidCredentialsError' ||
@@ -82,7 +80,6 @@ const Login = () => {
         }
       } else {
         //success. happy path
-        //TODO: Set token
         window.localStorage.setItem('token', result.token);
         window.localStorage.setItem('user', JSON.stringify(result.user));
         navigate('/');
@@ -95,21 +92,16 @@ const Login = () => {
       maxWidth='xs'
       sx={{
         display: 'flex',
-        flexDirection: 'column',
-        marginTop: '40px',
+        flexDirection: 'column',        
       }}>
-      <Stack spacing={2} alignItems={'center'}>
+      <Stack spacing={2} alignItems={'center'} pt={'14px'}>
         <Typography
           sx={{
-            textIndent: '-500px',
             width: '103px',
             height: '31px',
             backgroundPositionX: '-5px',
             backgroundPositionY: '-130px',
             backgroundImage: `url("https://m.media-amazon.com/images/S/sash/mPGmT0r6IeTyIee.png")`,
-            verticalAlign: 'top',
-            marginTop: '5px',
-            marginBottom: '10px',
           }}
         />
         <Box
