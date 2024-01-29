@@ -5,7 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import ProductFilter from './ProductFilter';
 import Header from './Header';
-// import Grid from '@material-ui/core/Grid';
+import { SearchOutlined } from '@mui/icons-material';
+
 
 const defaultFilterState = {
   price: { minPrice: null, maxPrice: null },
@@ -67,7 +68,7 @@ export const Home = () => {
     } else {
       fetchProducts();
     }
-  }, []);
+  }, [search, category]);
 
   useEffect(() => {
     if (filter !== null && filter !== defaultFilterState) {
@@ -109,6 +110,7 @@ export const Home = () => {
           gap: '0px',
           marginTop: '100px',
         }}>
+        
         {products?.length > 0 && (
           <ProductFilter
             minPrice={minPrice}
