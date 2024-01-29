@@ -8,8 +8,10 @@ import ProductDetails from './components/ProductDetails';
 import Orders from './components/Orders';
 import { CartProvider } from './context/cart';
 import Checkout from './components/Checkout';
+// import { useContext } from 'react';
 
 export default function App() {
+  // const { cart  = useContext(CartContext);
   return (
     <Container
       maxWidth={false}

@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import ProductFilter from './ProductFilter';
 import Header from './Header';
+// import Grid from '@material-ui/core/Grid';
 
 const defaultFilterState = {
   price: { minPrice: null, maxPrice: null },

@@ -5,15 +5,16 @@ const SupportedPayments = () => {
   return (
     <Box
       sx={{
-        borderRadius: '5px',
+        borderRadius: '9px',
+        borderColor: `rgb(221,221,221)`,
         backgroundColor: 'white',
         borderStyle: 'solid',
-        borderColor: 'white',
         alignItems: 'center',
         display: 'flex',
         flexWrap: 'wrap',
         gap: '15px',
         padding: '10px',
+        border: '0',
       }}>
       <Box
         sx={imgStyle}
