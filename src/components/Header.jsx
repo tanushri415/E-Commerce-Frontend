@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import './Header.css';
 import { Divider, Drawer, MenuList, Tooltip } from '@mui/material';
@@ -17,6 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { productApi } from '../api';
 import { CartContext } from '../context/cart';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -32,16 +33,6 @@ const Search = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(3),
     width: 'auto',
   },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -64,7 +55,23 @@ export default function Header() {
   const [productCategories, setProductCategories] = useState([]);
   const [username, setUserName] = useState('Sign In');
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/?search=${searchText}`);
+    }
+  };
+  const handleSearchButtonClick = (e) => {
+    e.preventDefault();
+    navigate(`/?search=${searchText}`);
+  };
+
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearchText(e.target.value);
+  };
   useEffect(() => {
     const fetchProductCategories = async () => {
       const categories = await productApi.getProductCategories();
@@ -160,12 +167,15 @@ export default function Header() {
               }}></Typography>
           </a>
           <Search sx={{ flexGrow: 1, display: 'flex' }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
+            <IconButton onClick={handleSearchButtonClick}>
+              <SearchOutlinedIcon htmlColor='white' />
+            </IconButton>
             <StyledInputBase
               placeholder='Search…'
               inputProps={{ 'aria-label': 'search' }}
+              value={searchText}
+              onChange={handleSearchChange}
+              onKeyDown={handleKeyDown}
             />
           </Search>
           <Box component='a' href={isUserLoggedIn ? '#' : '/login'}>
