@@ -6,7 +6,10 @@
 .header_bottom {
     display: flex;
     background-color: darkslategrey;
+}
 
+.headerLink {
+    text-decoration: none;
 }
 
 .headerText {

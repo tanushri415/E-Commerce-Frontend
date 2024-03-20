@@ -4,20 +4,16 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(
-    localStorage.getItem('cartItems')
-      ? JSON.parse(localStorage.getItem('cartItems'))
-      : []
+    localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
   );
 
   const addToCart = (item) => {
     const isItemInCart = cartItems.find((cartItem) => cartItem.id === item.id);
-
+    console.log(cartItems);
     if (isItemInCart) {
       setCartItems(
         cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
+          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
         )
       );
     } else {
@@ -33,9 +29,7 @@ export const CartProvider = ({ children }) => {
     } else {
       setCartItems(
         cartItems.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
+          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
         )
       );
     }
@@ -49,17 +43,14 @@ export const CartProvider = ({ children }) => {
     } else {
       //do nothing
     }
-  }
+  };
 
   const clearCart = () => {
     setCartItems([]);
   };
 
   const getCartTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    ).toFixed(2);
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
   useEffect(() => {

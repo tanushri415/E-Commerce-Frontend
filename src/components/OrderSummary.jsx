@@ -22,7 +22,6 @@ const OrderSummary = ({ showChkoutBtn = true }) => {
       {showChkoutBtn === true && (
         <Button
           color='gold'
-          width='30px'
           variant='contained'
           size='medium'
           href='/checkout'

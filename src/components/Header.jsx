@@ -57,6 +57,7 @@ export default function Header() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -86,15 +87,17 @@ export default function Header() {
     if (user) {
       setUserName(user.username);
       setIsUserLoggedIn(true);
+      if (user.isadmin === true) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
     }
   }, []);
 
   const [open, setState] = useState(false);
   const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setState(open);
@@ -114,7 +117,7 @@ export default function Header() {
           position: 'relative',
           gap: '15px',
         }}>
-        <Toolbar>
+        <Toolbar data-testid='cypress-Title'>
           <IconButton
             size='large'
             edge='start'
@@ -140,10 +143,7 @@ export default function Header() {
                   {productCategories?.map((category, index) => {
                     return (
                       <MenuItem className='categoryDrawer__item' key={index}>
-                        <a
-                          href={`/?category=${category}`}
-                          className='categoryDrawer__item'
-                          key={index}>
+                        <a href={`/?category=${category}`} className='categoryDrawer__item' key={index}>
                           {category}
                         </a>
                       </MenuItem>
@@ -178,22 +178,24 @@ export default function Header() {
               onKeyDown={handleKeyDown}
             />
           </Search>
-          <Box component='a' href={isUserLoggedIn ? '#' : '/login'}>
+          {isAdmin && (
+            <Box component='a' href='/admin' className='headerLink'>
+              <h4 className='headerText'>Admin</h4>
+              <h4 className='headerText'>Dashboard</h4>
+            </Box>
+          )}
+          <Box component='a' href={isUserLoggedIn ? '#' : '/login'} className='headerLink'>
             <h4 className='headerText'>Hello,</h4>
             <h4 className='headerText'>{username}</h4>
           </Box>
           {isUserLoggedIn && (
-            <Box component='a' href='/orders'>
+            <Box component='a' href='/orders' className='headerLink'>
               <h4 className='headerText'>Returns</h4>
               <h4 className='headerText'>Orders</h4>
             </Box>
           )}
           <Tooltip title='Cart'>
-            <IconButton
-              size='large'
-              aria-label={`show ${cartItems?.length} items`}
-              color='inherit'
-              href={`/cart`}>
+            <IconButton size='large' aria-label={`show ${cartItems?.length} items`} color='inherit' href={`/cart`}>
               <Badge badgeContent={cartItems?.length} color='error' showZero>
                 <ShoppingCartOutlinedIcon />
               </Badge>
@@ -227,10 +229,7 @@ export default function Header() {
         className='header_bottom'>
         {productCategories?.map((category, index) => {
           return (
-            <a
-              href={`/?category=${category}`}
-              className='category__item'
-              key={index}>
+            <a href={`/?category=${category}`} className='category__item' key={index}>
               {category}
             </a>
           );

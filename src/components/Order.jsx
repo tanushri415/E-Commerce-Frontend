@@ -1,10 +1,4 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect, useState } from 'react';
 import { productApi } from '../api';
@@ -13,18 +7,12 @@ const Order = ({ order }) => {
   const [cart, setCart] = useState(null);
 
   useEffect(() => {
-    Promise.all(
-      order.products.map((productInCart) =>
-        productApi.getProductByid(productInCart.productId)
-      )
-    )
+    Promise.all(order.products.map((productInCart) => productApi.getProductByid(productInCart.productId)))
       .then((products) => {
         var cartVar = { ...order };
         cartVar.products = [];
         order?.products?.map((productInCart, productIndex) => {
-          var productFound = products.filter(
-            (product) => product.id === productInCart.productId
-          )[0];
+          var productFound = products.filter((product) => product.id === productInCart.productId)[0];
           cartVar.products[productIndex] = {
             ...order.products[productIndex],
             ...productFound,
@@ -37,24 +25,17 @@ const Order = ({ order }) => {
 
   return (
     <Accordion>
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        sx={{ fontWeight: 'bold' }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontWeight: 'bold' }}>
         Order Placed -{' '}
         {new Date(cart?.date).toLocaleDateString(undefined, {
           dateStyle: 'long',
         })}{' '}
         -{' $'}
-        {cart?.products.reduce(
-          (total, item) => total + item.price * item.quantity,
-          0
-        )}
+        {cart?.products.reduce((total, item) => total + item.price * item.quantity, 0)}
       </AccordionSummary>
       <AccordionDetails>
         {cart?.products?.map((product) => (
-          <Box
-            key={product.id}
-            sx={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
+          <Box key={product.id} sx={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
             <a href={`/product/${product?.id}`}>
               <Box
                 component='img'
@@ -75,12 +56,8 @@ const Order = ({ order }) => {
               }}>
               <Typography variant='h6'>{product?.title}</Typography>
               <Typography variant='body2'>{product?.description}</Typography>
-              <Typography variant='caption'>
-                Quantity: {product?.quantity}
-              </Typography>
-              <Typography variant='caption'>
-                Price: ${product?.price}
-              </Typography>
+              <Typography variant='caption'>Quantity: {product?.quantity}</Typography>
+              <Typography variant='caption'>Price: ${product?.price}</Typography>
             </Box>
           </Box>
         ))}

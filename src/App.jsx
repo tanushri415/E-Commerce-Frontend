@@ -8,15 +8,13 @@ import ProductDetails from './components/ProductDetails';
 import Orders from './components/Orders';
 import { CartProvider } from './context/cart';
 import Checkout from './components/Checkout';
+import Admin from './components/Admin';
 // import { useContext } from 'react';
 
 export default function App() {
   // const { cart  = useContext(CartContext);
   return (
-    <Container
-      maxWidth={false}
-      disableGutters
-      sx={{ backgroundColor: '#EAEDED', minHeight: '100vh' }}>
+    <Container maxWidth={false} disableGutters sx={{ backgroundColor: '#EAEDED', minHeight: '100vh' }}>
       <BrowserRouter>
         <CartProvider>
           <Routes>
@@ -27,6 +25,7 @@ export default function App() {
             <Route path='/cart' element={<ShoppingCart />} />
             <Route path='/orders' element={<Orders />} />
             <Route path='/checkout' element={<Checkout />} />
+            <Route path='/admin' element={<Admin />} />
           </Routes>
         </CartProvider>
       </BrowserRouter>
